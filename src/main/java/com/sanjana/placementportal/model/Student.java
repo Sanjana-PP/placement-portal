@@ -1,17 +1,41 @@
 package com.sanjana.placementportal.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Student{
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String name;
     private String department;
 
-    public Student(int id, String name, String department){
+    public Student(){}
+
+    public Student(Integer id, String name, String department){
         this.id=id;
         this.name=name;
         this.department=department;
     }
 
-    public int getId(){
+    public void setId(Integer id){
+        this.id=id;
+    }
+
+    public void setName(String name){
+        this.name=name;
+    }
+
+    public void setDepartment(String department){
+        this.department=department;
+    }
+
+    public Integer getId(){
         return id;
     }
 

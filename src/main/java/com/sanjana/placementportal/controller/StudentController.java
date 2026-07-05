@@ -15,21 +15,21 @@ public class StudentController {
     public StudentController(StudentService service){
         this.service=service;
     }
-
-    @GetMapping
-    public String getStu(){
-        return "Hello students";
-    }
-
-    @GetMapping("/{id}")
-    public String getStudents(@PathVariable int id){
-        return "Student id: "+ id;
-    }
-
-    @GetMapping("/name/{name}")
-    public String getName(@PathVariable String name){
-        return "Student name: "+name;
-    }
+//
+//    @GetMapping
+//    public String getStu(){
+//        return "Hello students";
+//    }
+//
+//    @GetMapping("/{id}")
+//    public String getStudents(@PathVariable int id){
+//        return "Student id: "+ id;
+//    }
+//
+//    @GetMapping("/name/{name}")
+//    public String getName(@PathVariable String name){
+//        return "Student name: "+name;
+//    }
 
     @GetMapping("/det")
     public List<Student> getStudent(){
@@ -37,7 +37,17 @@ public class StudentController {
     }
 
     @PostMapping("/stu")
-    public Student postStu(@RequestBody Student student){
-        return student;
+    public String postStu(@RequestBody Student student){
+        return service.postStu(student);
+    }
+
+    @PutMapping("/{id}")
+    public String updateStudent(@PathVariable("id") Integer id , @RequestBody Student update ){
+        return service.updateStudent(id , update);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteStudent(@PathVariable("id") Integer id){
+        return service.deleteStudent(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.sanjana.placementportal.service;
 
 import com.sanjana.placementportal.model.Student;
+import com.sanjana.placementportal.repository.StudentRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,15 +9,46 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    public List<Student> getStudent(){
-        return List.of(
-                new Student(1,"Sanjana","CSE"),
-                new Student(2,"Sadhana", "AIDS")
-        );
+    private final StudentRepo repo;
+    public StudentService(StudentRepo repo){
+        this.repo=repo;
     }
-//
-//    public String postStu(Student student){
-//        repo.save(student);
-//        return "Student saved";
+
+//    public List<Student> getStudent(){
+//        return List.of(
+//                new Student(1,"Sanjana","CSE"),
+//                new Student(2,"Sadhana", "AIDS")
+//        );
 //    }
+
+    public List<Student> getStudent(){
+        return repo.findAll();
+    }
+    public String postStu(Student student){
+        repo.save(student);
+        return "Posted Successfully";
+    }
+
+    public String updateStudent(Integer id , Student update){
+        Student exist= repo.findById(id).orElse(null);
+        if(exist==null){
+            return "The record with this id does not exist";
+        }
+
+        exist.setName(update.getName());
+        exist.setDepartment(update.getDepartment());
+
+        repo.save(exist);
+
+        return "Updated Successfully";
+    }
+
+    public String deleteStudent(Integer id){
+        if(repo.existsById(id)){
+            repo.deleteById(id);
+            return "Deleted Successfully";
+        }
+
+        return "No record found";
+    }
 }

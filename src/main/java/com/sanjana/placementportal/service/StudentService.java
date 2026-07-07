@@ -1,5 +1,6 @@
 package com.sanjana.placementportal.service;
 
+import com.sanjana.placementportal.exception.StudentNotFoundException;
 import com.sanjana.placementportal.model.Student;
 import com.sanjana.placementportal.repository.StudentRepo;
 import org.springframework.stereotype.Service;
@@ -30,10 +31,7 @@ public class StudentService {
     }
 
     public String updateStudent(Integer id , Student update){
-        Student exist= repo.findById(id).orElse(null);
-        if(exist==null){
-            return "The record with this id does not exist";
-        }
+        Student exist= repo.findById(id).orElseThrow(() -> new StudentNotFoundException("Student not found with the id "+id));
 
         exist.setName(update.getName());
         exist.setDepartment(update.getDepartment());

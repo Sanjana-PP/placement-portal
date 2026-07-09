@@ -2,6 +2,8 @@ package com.sanjana.placementportal.controller;
 
 import com.sanjana.placementportal.model.Student;
 import com.sanjana.placementportal.service.StudentService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,39 +17,29 @@ public class StudentController {
     public StudentController(StudentService service){
         this.service=service;
     }
-//
-//    @GetMapping
-//    public String getStu(){
-//        return "Hello students";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public String getStudents(@PathVariable int id){
-//        return "Student id: "+ id;
-//    }
-//
-//    @GetMapping("/name/{name}")
-//    public String getName(@PathVariable String name){
-//        return "Student name: "+name;
-//    }
 
-    @GetMapping("/det")
+    @GetMapping("/{id}")
+    public Student getStudents(@PathVariable int id){
+        return service.getStudents(id);
+    }
+
+    @GetMapping("/all")
     public List<Student> getStudent(){
         return service.getStudent();
     }
 
-    @PostMapping("/stu")
-    public String postStu(@RequestBody Student student){
+    @PostMapping("/post")
+    public ResponseEntity<String> postStu(@Valid @RequestBody Student student){
         return service.postStu(student);
     }
 
     @PutMapping("/{id}")
-    public String updateStudent(@PathVariable("id") Integer id , @RequestBody Student update ){
+    public ResponseEntity<String> updateStudent(@PathVariable Integer id ,@Valid @RequestBody Student update ){
         return service.updateStudent(id , update);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable("id") Integer id){
+    public String deleteStudent(@PathVariable Integer id){
         return service.deleteStudent(id);
     }
 }
